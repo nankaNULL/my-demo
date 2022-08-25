@@ -1,6 +1,5 @@
 import React from "react";
 import type { mxGraph, mxGraphExportObject, mxPoint, mxRectangle } from "mxgraph";
-import BloodMap from '../mock/index.json'
 
 interface IProps {
     Mx: mxGraphExportObject;
