@@ -14,6 +14,7 @@ import SwimlaneLayoutGraph from "../components/swimlaneLayout";
 import HandlerGraph from "../components/handler";
 import ConnectionGraph from "../components/connection";
 import AnchorsGraph from "../components/anchors";
+import EchartsPage from "../components/echarts/echartGraph";
 // import GraphContainer from "../components/assetBlood/graphContainer";
 // import '../styles/graphContainer.scss';
 
@@ -43,7 +44,8 @@ export default class MxGraph extends React.PureComponent<any, any> {
 				{/* <ShapesGraph Mx={this.Mx} /> */}
 				{/* <HandlerGraph Mx={this.Mx} /> */}
 				{/* <ConnectionGraph Mx={this.Mx} /> */}
-				<AnchorsGraph Mx={this.Mx} />
+				{/* <AnchorsGraph Mx={this.Mx} /> */}
+				<EchartsPage Mx={this.Mx} />
 			</div>
 		)
 	}
