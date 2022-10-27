@@ -15,6 +15,9 @@
     "dev": {
       "cache": false
     },
+    "ssr": {
+      "cache": false
+    },
     "test": {
       "dependsOn": [
         "build"
