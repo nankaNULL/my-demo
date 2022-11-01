@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from "antd";
 import { withRouter } from 'next/router';
 import { actions } from '../../store/reducer';
@@ -9,7 +9,6 @@ const ReduxPage = (props: any) => {
     const { router } = props;
     const dispatch = useDispatch();
     const state = useSelector((state: any) => ({ count: state.count }));
-    console.log(props);
     return (
         <div>
             <h1>Redux Page</h1>

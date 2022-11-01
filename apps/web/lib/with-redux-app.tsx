@@ -16,9 +16,8 @@ function initStore(initialState?: any) {
 }
 
 const ReduxHoc = (Comp: any) => {
-    class withReduxApp extends React.PureComponent<any, any> {
+    return class withReduxApp extends React.PureComponent<any, any> {
         reduxStore: any
-        static getInitialProps: (ctx: any) => Promise<{ initialReduxState: any }>
         constructor(props: any) {
             super(props)
             // getInitialProps创建了store 这里为什么又重新创建一次？
@@ -27,6 +26,30 @@ const ReduxHoc = (Comp: any) => {
             // 所以选择在getInitialProps返回initialReduxState初始的状态
             // 再在这里通过initialReduxState去创建一个完整的store
             this.reduxStore = initStore(props.initialReduxState)
+        }
+
+        // 这个其实是_app.js的getInitialProps
+        // 在服务端渲染和客户端路由跳转时会被执行
+        // 所以非常适合做redux-store的初始化
+        static getInitialProps = async (ctx: any) => {
+            const reduxStore = initStore()
+            ctx.reduxStore = reduxStore
+
+            let compProps = {};
+            let componentProps = {};
+            if (typeof Comp.getInitialProps === 'function') {
+                compProps = await Comp.getInitialProps(ctx)
+            }
+            if (typeof ctx.Component.getInitialProps === 'function') {
+                componentProps = await ctx.Component.getInitialProps(ctx)
+            }
+            return {
+                pageProps: {
+                    ...compProps,
+                    ...componentProps
+                },
+                initialReduxState: reduxStore.getState()
+            }
         }
 
         render() {
@@ -41,32 +64,6 @@ const ReduxHoc = (Comp: any) => {
             )
         }
     }
-
-    // 这个其实是_app.js的getInitialProps
-    // 在服务端渲染和客户端路由跳转时会被执行
-    // 所以非常适合做redux-store的初始化
-    withReduxApp.getInitialProps = async ctx => {
-        const reduxStore = initStore()
-        ctx.reduxStore = reduxStore
-
-        let compProps = {};
-        let componentProps = {};
-        if (typeof Comp.getInitialProps === 'function') {
-            compProps = await Comp.getInitialProps(ctx)
-        }
-        if (typeof ctx.Component.getInitialProps === 'function') {
-            componentProps = await ctx.Component.getInitialProps(ctx)
-        }
-        return {
-            pageProps: {
-                ...compProps,
-                ...componentProps
-            },
-            initialReduxState: reduxStore.getState()
-        }
-    }
-
-    return withReduxApp
 }
 
 export default ReduxHoc;
