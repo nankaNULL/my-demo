@@ -1,7 +1,7 @@
-import { Menu } from 'antd';
+import { useEffect, useState } from 'react';
+import Menu from 'antd/lib/menu';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 interface IProps { }
 const Header: React.FC<IProps> = () => {

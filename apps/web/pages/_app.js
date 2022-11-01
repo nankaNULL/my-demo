@@ -1,24 +1,20 @@
 import React from 'react'
-import { Layout } from "antd";
-import { Provider } from 'react-redux'
-import Header from "../components/header";
+import { Provider } from 'react-redux';
 import withRedux from '../lib/with-redux-app';
+import dynamic from 'next/dynamic';
 import 'antd/dist/antd.less';
 
-const { Content } = Layout;
+const Layout = dynamic(() => import("../components/layout"));
 
 function MyApp(props) {
     const { Component, pageProps, reduxStore } = props;
     return (
         <Layout>
-            <Header />
-            <Content style={{ padding: 20 }}>
-                <Provider store={reduxStore}>
-                    <Component {...pageProps} />
-                </Provider>
-            </Content>
+            <Provider store={reduxStore}>
+                <Component {...pageProps} />
+            </Provider>
         </Layout>
     )
 }
 
-export default withRedux(MyApp)
+export default withRedux(MyApp);

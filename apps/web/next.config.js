@@ -21,4 +21,10 @@ const plugins = [
     ],
     // [withTM],
 ];
-module.exports = withPlugins([...plugins]);
+module.exports = withPlugins([...plugins], {
+    experimental: {
+        legacyBrowsers: false,
+        browsersListForSwc: true,
+    },
+});
+
